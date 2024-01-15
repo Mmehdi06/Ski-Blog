@@ -2,23 +2,28 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run()
-{
-    $admin = [
-        'name' => 'admin',
-        'email' => 'admin@ehb.be',
-        'password' => bcrypt('Password!321'),
-    ];
+    public function run(): void
+    {
+        // Generate a random 10-character username and email
+        $username = 'admin';
+        $email = 'admin@ehb.be';
+        $password = 'Password!321';
 
-    User::create($admin);
-}
+        // Insert the admin user into the users table
+        DB::table('users')->insert([
+            'name' => $username,
+            'email' => $email,
+            'password' => Hash::make($password),
+            'userType' => 'admin',
+        ]);
+    }
 
 }
